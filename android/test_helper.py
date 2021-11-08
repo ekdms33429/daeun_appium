@@ -2,6 +2,11 @@ from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+"""
+현재 {package/activity}
+adb shell dumpsys window | find "mCurrentFocus"
+"""
+
 # 팝업 알림(alert)가 떠있는지 확인
 def is_alert_exist(webdriver):
     from selenium.common.exceptions import NoAlertPresentException
