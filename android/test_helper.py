@@ -30,6 +30,8 @@ def find_element_by_tmpmatching(driver, thr, cap_path, tmp_img):
     #thr > 일치하는 정도 = 이정도 일치하면 True 처리됨
     #cap_path > 캡쳐본 저장 경로
     #tmp_img > 기획서 이미지 or 찾을 이미지 대상
+    import cv2
+    import numpy as np
 
     cap_img = cv2.imread(cap_path) #원본 이미지
     cap_imgray = cv2.cvtColor(cap_img, cv2.COLOR_BGR2GRAY) #원본 이미지
@@ -44,6 +46,8 @@ def find_element_by_tmpmatching(driver, thr, cap_path, tmp_img):
 
     loc = np.where(res >= thr) # (array_row, array_column) row = y, column = x
 
+    for pt in zip(*loc[::-1]):
+        cv2.rectangle(cap_img, pt, (pt[0] + w, pt[1] + h), (0, 0, 255), 2)
 
     #일치하는 영역 중앙 좌표 Tap 동작
     TouchAction(driver).tap(x=pt[0] + w / 2, y=pt[1] + h / 2).perform()
