@@ -1,6 +1,6 @@
 import unittest
 from appium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
@@ -19,15 +19,13 @@ class TestFirst(unittest.TestCase):
         cls.driver = webdriver.Remote("http://localhost:4723/wd/hub", cls.dc)
         print("lm setUpClass")
 
-    def setUp(self) -> None:
-        print("lm setUp")
-
     def test_0001title(self):
         print("0001")
-        try:
-            current_activity = self.driver.current_activity
-            if current_activity == "com.ctrip.ibu.myctrip.main.module.home.IBUHomeActivity":
-                WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//*[contains(@content-desc, 'new user page 3 title')]")))
+
+        current_activity = self.driver.current_activity
+        if current_activity == "com.ctrip.ibu.myctrip.main.module.home.IBUHomeActivity":
+            try:
+                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[contains(@content-desc, 'new user page 3 title')]")))
                 print("new user page 3 title")
                 titleText = self.driver.find_element_by_accessibility_id("new user page 3 title").get_attribute("text")
                 subtitleText = self.driver.find_element_by_accessibility_id("new user page 3 desc").get_attribute("text")
@@ -39,35 +37,29 @@ class TestFirst(unittest.TestCase):
                 self.assertEqual(subscribeBtn, "확인")
                 self.assertEqual(notsubscribeBtn, "나중에")
 
-        except:
-            print("new user page 0 title")
-            skipBtn = self.driver.find_element_by_accessibility_id("new user page skip button")
-            firstText = self.driver.find_element_by_accessibility_id("new user page 0 title").get_attribute("text")
-            nextText = self.driver.find_element_by_id("ctrip.english:id/nextText").get_attribute("text")
-            nextBtn = self.driver.find_element_by_accessibility_id("new user page next button").get_attribute("clickable")
-            pager = self.driver.find_element_by_id("ctrip.english:id/pager")
+            except TimeoutException:
+                print("new user page 0 title")
+                skipBtn = self.driver.find_element_by_accessibility_id("new user page skip button")
+                firstText = self.driver.find_element_by_accessibility_id("new user page 0 title").get_attribute("text")
+                nextText = self.driver.find_element_by_id("ctrip.english:id/nextText").get_attribute("text")
+                nextBtn = self.driver.find_element_by_accessibility_id("new user page next button").get_attribute("clickable")
+                pager = self.driver.find_element_by_id("ctrip.english:id/pager")
 
-            self.assertEqual(skipBtn.get_attribute("text"), "건너뛰기")
-            self.assertTrue(skipBtn.get_attribute("clickable"))
-            self.assertEqual(firstText, "트립닷컴이 알려주는 할인 항공편 및 호텔 특가 소식")
-            self.assertEqual(nextText, "다음")
-            self.assertTrue(nextBtn)
-            self.assertTrue(pager.get_attribute("scrollable"))
-
+                self.assertEqual(skipBtn.get_attribute("text"), "건너뛰기")
+                self.assertTrue(skipBtn.get_attribute("clickable"))
+                self.assertEqual(firstText, "트립닷컴이 알려주는 할인 항공편 및 호텔 특가 소식")
+                self.assertEqual(nextText, "다음")
+                self.assertTrue(nextBtn)
+                self.assertTrue(pager.get_attribute("scrollable"))
 
     def test_0002title(self):
         print("test2")
-        """        
-
-        """
-
-    def test_something(self):
-        print("test3")
         self.assertEqual(True, True)  # add assertion here
 
     @classmethod
     def tearDownClass(cls):
         print("tearDownClass")
+        cls.driver.quit()
 
 
 if __name__ == '__main__':
