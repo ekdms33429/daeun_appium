@@ -51,3 +51,4 @@ def find_element_by_tmpmatching(driver, thr, cap_path, tmp_img):
 
     #일치하는 영역 중앙 좌표 Tap 동작
     TouchAction(driver).tap(x=pt[0] + w / 2, y=pt[1] + h / 2).perform()
+
