@@ -50,7 +50,7 @@ class TestFirst(unittest.TestCase):
                         self.assertTrue(pager.get_attribute("scrollable"))
 
                         nextBtn.click()
-                        self.driver.save_screenshot('screencap.png')
+                        self.driver.save_screenshot('../capimg/screencap.png')
 
             except TimeoutException:
                 print("TimeoutException")
