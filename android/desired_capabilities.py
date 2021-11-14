@@ -6,11 +6,16 @@ def PATH(p: str) -> str:
 
 def get_desired_capabilities(app: Optional[str] = None) -> Dict[str, Any]:
     desired_caps: Dict[str, Any] = {
-        "deviceName": "192.168.0.103:5555",
+        "deviceName": "192.168.0.7:5555",
         "platformName": "Android",
         "automationName": "Uiautomator2",
     }
-
+    '''
+    "deviceName": "V30",
+        "platformName": "Android",
+        "automationName": "Uiautomator2",
+        "udid": "LGMV300S6fa91a67",
+    '''
     if app is not None:
         #PC 내부에 있는 apk 사용 시 default 값: "C:\Users\사용자"
         local_pathtxt = PATH(os.path.join('../../Desktop', 'apk', app))
