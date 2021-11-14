@@ -6,10 +6,9 @@ def PATH(p: str) -> str:
 
 def get_desired_capabilities(app: Optional[str] = None) -> Dict[str, Any]:
     desired_caps: Dict[str, Any] = {
-        "deviceName": "V30",
+        "deviceName": "192.168.0.103:5555",
         "platformName": "Android",
         "automationName": "Uiautomator2",
-        "udid": "LGMV300S6fa91a67",
     }
 
     if app is not None:
