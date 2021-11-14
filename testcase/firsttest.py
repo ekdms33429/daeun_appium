@@ -93,8 +93,9 @@ class TestFirst(unittest.TestCase):
         print("0002")
         #Pre-Condition
         try:
-            WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "account page tab button")))
+            WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[contains(@content-desc, 'account page tab button')]")))
             self.driver.find_element_by_accessibility_id("account page tab button").click()
+            self.driver.implicitly_wait(5)
             cardtext1 = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.TextView[1]").get_attribute("text")
             cardtext2 = self.driver.find_element_by_xpath("/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.TextView[2]").get_attribute("text")
             cardbtn = self.driver.find_element_by_id("ctrip.english:id/btn_upgrade")
@@ -104,7 +105,7 @@ class TestFirst(unittest.TestCase):
             self.assertEqual(cardbtn.get_attribute("text"), "로그인/회원가입")
 
             self.driver.find_element_by_id("ctrip.english:id/iv_dialog_close").click()
-            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(By.ID, "ctrip.english:id/unlogin_tvSignIn"))
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.ID, "unlogin_tvSignIn")))
 
             #Test Precedure
             self.driver.find_element_by_id("ctrip.english:id/unlogin_tvSignIn").click()
