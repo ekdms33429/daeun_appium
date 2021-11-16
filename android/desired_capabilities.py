@@ -6,7 +6,7 @@ def PATH(p: str) -> str:
 
 def get_desired_capabilities(app: Optional[str] = None) -> Dict[str, Any]:
     desired_caps: Dict[str, Any] = {
-        "deviceName": "192.168.0.7:5555",
+        "deviceName": "172.20.10.3:5555",
         "platformName": "Android",
         "automationName": "Uiautomator2",
     }

@@ -111,7 +111,8 @@ class TestFirst(unittest.TestCase):
             self.driver.find_element_by_id("ctrip.english:id/unlogin_tvSignIn").click()
             if self.driver.current_activity == "com.ctrip.ibu.account.module.login.LoginTypeActivity":
                 loginbtn = self.driver.find_element_by_accessibility_id("mainlogin_login_btn")
-                self.assertEqual(loginbtn.get_attribute("text"), "이메일 또는 휴대폰 번호로 로그인하기")
+                login_list = ["이메일 또는 휴대폰 번호로 로그인", "이메일 또는 휴대폰 번호로 로그인하기"]
+                self.assertIn(loginbtn.get_attribute("text"), login_list)
                 loginbtn.click()
             else:
                 assert False
@@ -123,16 +124,37 @@ class TestFirst(unittest.TestCase):
         except NoSuchElementException:
             print("NoSuchElementException")
             assert False
-    """
+
+    #LoginActivity
     def test_0003login(self):
-        if self.driver.current_activity == "com.ctrip.ibu.account.module.login.LoginActivity":
-    """
+        print("0003")
+        try:
+            if self.driver.current_activity == "com.ctrip.ibu.account.module.login.LoginActivity":
+                WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[contains(@text, '트립닷컴 로그인하기')]")))
+                accountText = self.driver.find_element_by_accessibility_id("accountlogin_account_edt")
+                pwText = self.driver.find_element_by_accessibility_id("accountlogin_password_edt")
+                forgotpwText = self.driver.find_element_by_id("ctrip.english:id/forgot_password_text")
+                loginBtn = self.driver.find_element_by_accessibility_id("test_login_sign_in")
+                policyText = self.driver.find_element_by_id("ctrip.english:id/account_login_policy")
+
+                self.assertEqual(accountText.get_attribute("text"), "이메일 주소/아이디/휴대전화")
+                self.assertEqual(pwText.get_attribute("text"), "비밀번호")
+                self.assertEqual(forgotpwText.get_attribute("text"), "비밀번호를 분실하셨나요?")
+                self.assertEqual(loginBtn.get_attribute("text"), "로그인")
+                self.assertEqual(policyText.get_attribute("text"), "계속 진행 시, 트립닷컴 예약 규정 및 개인정보 처리방침을 읽었으며 이에 동의합니다.")
+
+                accountText.send_keys("ekdms33429@gmail.com")
+                pwText.send_keys("!!!kde0818")
+                loginBtn.click()
+
+        except NoSuchElementException:
+            assert False
 
     @classmethod
     def tearDownClass(cls):
         print("tearDownClass")
         #time.sleep(600)
-        cls.driver.quit()
+        #cls.driver.quit()
 
 
 if __name__ == '__main__':
