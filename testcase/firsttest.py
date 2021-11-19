@@ -18,9 +18,9 @@ class TestFirst(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.dc = get_desired_capabilities("ctrip.english_7.42.2.apk")
         cls.driver = webdriver.Remote("http://localhost:4723/wd/hub", cls.dc)
-        print("lm setUpClass")
+        print("setUpClass")
 
-    #New User 앱 최초 실행 > 안내 팝업
+    #New User: 앱 최초 실행 > 안내 팝업
     def test_0001newuserpage(self):
         print("0001")
         titleText_list = ['트립닷컴이 알려주는 할인 항공편 및 호텔 특가 소식', '신속한 고객센터, 30초 이내 응답률로 안심 여행!',
